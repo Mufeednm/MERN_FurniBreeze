@@ -15,8 +15,9 @@ export const authJoi = Joi.object({
 });
 // joi validation for product
 export const productJoi = Joi.object({
-  title: Joi.string().min(3).max(30).required(),
-  description:Joi.string().min(3).max(50).required(),
+  title: Joi.string().min(3).max(300).required(),
+  description:Joi.string().min(3).max(500).required(),
   price:Joi.number().positive().required(),
-  category:Joi.string().min(3).max(50).required(),
+  crossprice:Joi.number().positive().required(),
+  type:Joi.string().min(3).max(50).required(),
 })

@@ -13,14 +13,19 @@ const productSchema=new mongoose.Schema({
         type: Number,
         required: true 
     },
+    crossprice: {
+        type: Number,
+        required: true 
+    },
     productImg: {
         type: String,
         required: true
     },
-    category: {
+    type: {
         type: String,
         required: true
     },
+
     quantity:{type :Number, default:1},
 
     isDeleted: {

@@ -6,9 +6,8 @@ import UseeContext from "../Globalcontext/UseConstext";
 import Footer from "./Footer";
 
 const Homepage = () => {
-  const { products } = useContext(UseeContext);
+  const [,,,,,,,,,, products] = useContext(UseeContext);
   const nav = useNavigate();
-
   return (
     <div>
       <Navbar />
@@ -70,18 +69,18 @@ const Homepage = () => {
 
         <div className="p-1">
           <h2 className="text-center text-2xl md:text-3xl lg:text-4xl">Items</h2>
+            
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {products.map((value, index) => (
-              <div key={index} className="w-full">
+            {products.map((product, index) => (
+              <div key={index} className="w-full" onClick={() => nav(`/${product.id}`)}>
                 <img
                   className="w-full"
-                  src={value.image}
-                  alt=""
-                  onClick={() => nav(`/${value.id}`)}
+                  src={product.productImg}
+                  alt={product.title}
                 />
                 <div className="text-center p-3">
-                  <h1 className="">{value.title}</h1>
-                  <h1> ₹{value.price}</h1>
+                  <h1 className="">{product.title}</h1>
+                  <h1> ₹{product.price}</h1>
                 </div>
               </div>
             ))}

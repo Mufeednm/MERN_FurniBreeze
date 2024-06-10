@@ -3,22 +3,40 @@ import { useNavigate, Link } from 'react-router-dom';
 import UseeContext from '../Globalcontext/UseConstext';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import axios from 'axios';
 
 const Signup = () => {
   const nav = useNavigate();
 
-  const [name, setName] = useState('');
+  // const { user, setUser } = useContext(UseeContext);
+  const [username, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { user, setUser } = useContext(UseeContext);
 
-  const handleSubmit = (e) => {
+  // console.log(username);
+  // console.log(email);
+  // console.log(password);
+
+
+  const handleSubmit = async  (e) => {
     e.preventDefault();
-    const newuser = { name, email, password, cart: [] };
-    setUser([...user, newuser]);
-    console.log(user);
+
+//  const user = {name,email,password} 
+try {
+  const respoonse =await axios.post("http://localhost:3000/api/users/register",{email,username,password})
+  if (respoonse.status ===201){
+    console.log(respoonse);
     nav('/Signin');
-    console.log(newuser);
+  }
+} catch (error) {
+  console.log(error,"its wrong");
+  alert(error)
+}
+    // const newuser = { name, email, password, cart: [] };
+    // setUser([...user, newuser]);
+    // console.log(user);
+    // nav('/Signin');
+    // console.log(newuser);
   };
 
   return (

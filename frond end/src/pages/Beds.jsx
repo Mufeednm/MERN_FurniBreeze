@@ -5,7 +5,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const Beds = () => {
-  const { products } = useContext(UseeContext);
+  const [,,,,,,,,,,products ] = useContext(UseeContext);
+  console.log("first",products);
   const nav = useNavigate();
 
   return (
@@ -28,16 +29,16 @@ const Beds = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {products
             .filter((value) => value.type === 'bed')
-            .map((e, index) => (
-              <div key={index} className="bg-slate-200">
+            .map((product, index) => (
+              <div key={index} className="bg-slate-200"  onClick={() => nav(`/${product.id}`)}>
                 <img
                   className="w-full h-72 object-cover cursor-pointer"
-                  src={e.image}
+                  src={product.productImg}
                   alt=""
-                  onClick={() => nav(`/${e.id}`)}
+                
                 />
                 <div className="text-center p-3">
-                  <h1 className="text-white font-bold">{e.title}</h1>
+                  <h1 className="text-white font-bold">{product.title}</h1>
                 </div>
               </div>
             ))}

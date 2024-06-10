@@ -7,20 +7,42 @@ import axios from "axios"
 
 const Signin = () => {
   const nav = useNavigate()
-  const [gmail, setGmail] = useState("")
-  const [passwords, setPasswords] = useState("")
   const { user, setLogins } = useContext(UseeContext)
+  const [email,setEmail] = useState("")
+  const [password, setPasswords] = useState("")
 
-  const handlesubmit = (e) => {
-    e.preventDefault()
-    let userData = user.find((item) => item.email === gmail)
-    if (userData && userData.password === passwords) {
-      setLogins(userData)
-      nav('/');
-    } else {
-      setLogins(null)
-      alert("Invalid credentials. Please try again.")
-    }
+  const handlesubmit =  async (e) => {
+    e.preventDefault() 
+const response= await axios.post("http://localhost:3000/api/users/Login",{email,password})
+if (response.status ===200) {
+  console.log(response.data);
+  const token = response.data.token
+  const id =response.data.rest._id
+  const cart=response.data.rest.cart.length
+  
+  const name=response.data.rest.username
+
+ 
+
+  localStorage.setItem("token", token)
+  localStorage.setItem("id", id)
+  localStorage.setItem("name", name)
+  localStorage.setItem("cartlength", cart)
+  console.log("data is",response.data.rest.cart.length);
+  
+ nav('/')
+
+}
+
+
+    // let userData = user.find((item) => item.email === gmail)
+    // if (userData && userData.password === passwords) {
+    //   setLogins(userData)
+    //   nav('/');
+    // } else {
+    //   setLogins(null)
+    //   alert("Invalid credentials. Please try again.")
+    // }
   }
 
   return (
@@ -36,7 +58,7 @@ const Signin = () => {
               </label>
               <input
                 type="email"
-                onChange={(e) => setGmail(e.target.value)}
+                onChange={(e) =>setEmail(e.target.value)}
                 id="email"
                 className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
                 placeholder="andrew@mail.com"

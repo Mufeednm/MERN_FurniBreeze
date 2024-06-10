@@ -4,7 +4,10 @@ import { productJoi } from "../validation/authJOI.js";
 
 // Add product
 export const addproduct = async (req, res, next) => {
+
   try {
+
+   
     // const {title,description,price,category}= req.body;
     const validatedProduct = await productJoi.validateAsync(req.body);
 
@@ -13,8 +16,9 @@ export const addproduct = async (req, res, next) => {
       title: validatedProduct.title,
       description: validatedProduct.description,
       price: validatedProduct.price,
-      category: validatedProduct.category,
+      type: validatedProduct.type,
       productImg: req.cloudinaryImageUrl,
+      crossprice:validatedProduct.crossprice,
     });
 
     await newProduct.save();

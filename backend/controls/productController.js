@@ -4,11 +4,11 @@ import Product from "../models/products.js";
 export const allProduct = async (req, res) => {
   try {
     const allProducts = await Product.find();
-    // console.log(allProducts);
+    console.log(allProducts);
     if (!allProducts) {
       return res.status(404).json({ message: "no products is to finding" });
     }
-    return res.status(200).json({ message: "all producs is shown" });
+    return res.status(200).json({allProducts});
   } catch (error) {
     return res.status(404).json({ message: "no products is to finding" });
   }

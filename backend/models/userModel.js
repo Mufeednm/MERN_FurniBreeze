@@ -14,10 +14,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    profileImg: {
-        type: String,
-        required: false
-    },
+    // profileImg: {
+    //     type: String,
+    //     required: false
+    // },
     accountCreatedDate: {
         type: Date,
         required: true,

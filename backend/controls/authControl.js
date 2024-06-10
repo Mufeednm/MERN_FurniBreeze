@@ -15,6 +15,7 @@ export const signup = async (req, res) => {
     try {
         // Validate request body using Joi
         const validatedData = await authJoi.validateAsync(req.body);
+        console.log(validatedData);
 
         // Check if user already exists with the provided email
         const existingUser = await User.findOne({ email: validatedData.email });
@@ -32,6 +33,10 @@ export const signup = async (req, res) => {
             password: hashedPassword,
             // profileImg: req.cloudinaryImageUrl 
         });
+        // console.log(email);
+
+        // console.log(password);
+        // console.log(username);
 
         // Save the new user to the database
         await newUser.save();
@@ -63,7 +68,7 @@ export const login = async (req,res)=>{
 
         const {email , password } = req.body;
 
-
+// console.log(password);
         //check weather user email is in mongodb
         const validUser = await User.findOne({email})
         if(!validUser) return res.status(401).json({message : "user not found"})
@@ -85,8 +90,8 @@ export const login = async (req,res)=>{
         //cookie setting
 
         res.cookie('access_token' , token , {httpOnly:true , expires : expiryDate})
-        .status(200).json(rest)
-        console.log(token);
+        .status(200).json({token,rest})
+        console.log( "its a token", token);
 
 
         
