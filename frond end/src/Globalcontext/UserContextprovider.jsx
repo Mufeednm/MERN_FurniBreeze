@@ -14,7 +14,7 @@ const UserContextprovider = ({children})=>{
     const fetchProducts = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/users/products');
-        console.log(response, "hell");
+      
         setProducts(response.data.allProducts);
       } catch (error) {
         console.error('Error fetching products:', error);

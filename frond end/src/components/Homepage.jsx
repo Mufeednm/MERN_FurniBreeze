@@ -72,11 +72,12 @@ const Homepage = () => {
             
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {products.map((product, index) => (
-              <div key={index} className="w-full" onClick={() => nav(`/${product.id}`)}>
+              <div key={index} className="w-full" onClick={() => nav(`/${product._id}`)}>
                 <img
                   className="w-full"
                   src={product.productImg}
                   alt={product.title}
+                  onClick={() => nav(`/${product._id}`)}
                 />
                 <div className="text-center p-3">
                   <h1 className="">{product.title}</h1>
