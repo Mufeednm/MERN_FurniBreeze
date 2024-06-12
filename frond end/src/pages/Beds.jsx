@@ -31,7 +31,7 @@ const Beds = () => {
             .filter((value) => value.type === 'bed')
             
             .map((product, index) => (
-              <div key={index} className="bg-slate-200"  onClick={() => nav(`/${product.id}`)}>
+              <div key={index} className="bg-slate-200"  onClick={() => nav(`/${product._id}`)}>
                 <img
                   className="w-full h-72 object-cover cursor-pointer"
                   src={product.productImg}
