@@ -10,7 +10,7 @@ export const authJoi = Joi.object({
     minDomainSegments: 2,
     tlds: { allow: ["com", "net"] },
   }).lowercase().required().trim(),
-  password: Joi.string().min(8).required().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).trim(),
+  password: Joi.string().min(3).required().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).trim(),
 
 });
 // joi validation for product

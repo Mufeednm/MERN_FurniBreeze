@@ -9,11 +9,14 @@ import UseeContext from '../Globalcontext/UseConstext';
 
 const Navbar = () => {
   const { logins, setLogins } = useContext(UseeContext);
+
+  const loginsdta = localStorage.getItem('name')
+  console.log(loginsdta,"this is from logins");
   const navigate = useNavigate();
   const [searchData, setSearchData] = useState('');
 
   const handleLogout = () => {
-    setLogins(null);
+   localStorage.clear()
     navigate('/');
   };
 
@@ -53,7 +56,7 @@ const Navbar = () => {
         </div>
 
         <div className='flex items-center gap-4 lg:ml-4'>
-          <p className='text-sm lg:text-base'>{logins ? logins.name : 'not logged'}</p>
+          <p className='text-sm lg:text-base'>{loginsdta ? loginsdta : 'not logged'}</p>
 
           <div>
             <button onClick={handleLogout}>
@@ -76,7 +79,7 @@ const Navbar = () => {
           <div className='cart button'>
             <button
               onClick={() => {
-                logins ? navigate('/cart') : navigate('/Signin');
+                loginsdta ? navigate('/cart') : navigate('/Signin');
               }}
               className='text-4xl p-0 flex'
             >

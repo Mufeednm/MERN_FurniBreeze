@@ -14,7 +14,7 @@ router.get("/products/:id",productbyId)
 // category Product Route
 router.get("/products/category/:categoryName",productbyCategory)
 
-router.use(usertoken)
+// router.use(usertoken)
 // Route fo CART
 router.post("/:id/cart/:productid",addtocart)
 // view cart items

@@ -20,6 +20,7 @@ const DisplayProduct = () => {
     setRender,
     products,
   } = useContext(UseeContext);
+  const loginsDta = localStorage.getItem('name')
   const { id } = useParams();
   const [datas,setDatas]=useState([])
   // console.log(id);
@@ -43,16 +44,26 @@ console.log("res",datas);
 // console.log("poda",mydata);
 // console.log("hello ",datas);
 
-  // const addToCart = () => {
-  //   const alreadyInCart = logins.cart.some((item) => item.id === mydata.id);
 
-  //   if (!alreadyInCart) {
-  //     logins.cart.push({ ...mydata, qty: 1 });
-  //   }
+const userid= localStorage.getItem("id")
+  const addToCart = async(id) => {
 
-  //   setRender(!render);
-  //   console.log(logins.cart);
-  // };
+   
+
+    const response=await axios.post(`http://localhost:3000/api/users/${userid}/cart/${id}`)
+console.log(response);
+
+
+
+    // const alreadyInCart = logins.cart.some((item) => item.id === mydata.id);
+
+    // if (!alreadyInCart) {
+    //   logins.cart.push({ ...mydata, qty: 1 });
+    // }
+
+    // setRender(!render);
+    // console.log(logins.cart);
+  };
 
   return (
     <div>
@@ -69,7 +80,7 @@ console.log("res",datas);
           </h1>
           <div></div>
           <button
-            onClick={logins ? addToCart : () => navigate("/Signin")}
+            onClick={loginsDta ?()=> addToCart(datas._id) : () => navigate("/Signin")}
             className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
           >
             Add To Cart

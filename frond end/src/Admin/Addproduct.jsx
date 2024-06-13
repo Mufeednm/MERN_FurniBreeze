@@ -12,7 +12,9 @@ const Addproduct = () => {
     e.preventDefault();
     let newdata = new FormData(e.target);
     let title = newdata.get("title");
-    let  type = newdata.get("type");
+    let 
+    
+    type = newdata.get("type");
     let price = newdata.get("price");
     let image = newdata.get("image");
 
