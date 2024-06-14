@@ -38,12 +38,13 @@ fetchcart()
 
 
 
-const removeCart = (id) => {
+const removeCart = async(id) => {
+  const respone= await axiox.post(`http://localhost:3000/api/users/${userid}/carts/remove/${id}`)
   
-  setLogins((oldData) => ({
-    ...oldData,
-    cart: oldData.cart.filter((v) => v.id !== id),
-  }));
+  // setLogins((oldData) => ({
+  //   ...oldData,
+  //   cart: oldData.cart.filter((v) => v.id !== id),
+  // }));
 };
 
 const handleIncrement = async (id) => {
@@ -101,27 +102,27 @@ const handleIncrement = async (id) => {
                       +
                     </button>
                     
-                  </div>
-                  {/* <button
-                    onClick={() => removeCart(value.id)}
+                  { <button
+                    onClick={() => removeCart(value.productid._id)}
                     className="ml-4 text-amber-200"
                   >
                     Remove
-                  </button> */}
+                  </button> }
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
-        {/* <div className="text-center font-bold text-2xl">
+        <div className="text-center font-bold text-2xl">
           <h1>
-            Total ={" "}
-            {logins.cart.reduce(
-              (acc, value) => (acc += value.price * value.qty),
+            Total :
+            {cartitems.reduce(
+              (acc, value) => (acc += value.productid.price * value.quantity),
               0
             )}
           </h1>
-        </div> */}
+        </div>
       </div>
       <Footer />
     </div>
