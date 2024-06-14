@@ -65,7 +65,7 @@ export const viewCart = async(req,res)=>{
 try {
     const id=req.params.id
     const productid=req.params.productid
-    const quantityNum=req.body.quantityNum
+    // const quantityNum=req.body.quantityNum
    
     const user = await User.findById(id)
     if (!user) {
@@ -77,12 +77,13 @@ try {
     }
     const cartitem= await Cart.findOne({userid:user._id , productid:product._id} )
     // console.log("cart",cartitem);
-    if (typeof quantityNum !== "number") {
-        res.status(404).json({message:"quantity should be number"})
-    }else{
-        cartitem.quantity +=quantityNum;
+    if  ( cartitem.quantity <1) {
+        return   res.status(202).json({message:"cant decrese "})
+       }else{
+  
+        cartitem.quantity +=1;
         await cartitem.save()
-    }
+       }
     res.status(200).json({message:"quantity is increased "})
 } catch (error) {
     
@@ -94,7 +95,7 @@ export const decreaseQuantity = async (req,res)=>{
     try {
         const id=req.params.id
         const productid=req.params.productid
-        const decrementNum=req.body.decrementNum
+      
        
         const user = await User.findById(id)
         if (!user) {
@@ -106,17 +107,19 @@ export const decreaseQuantity = async (req,res)=>{
         }
         const cartitem= await Cart.findOne({userid:user._id , productid:product._id} )
         // console.log("cart",cartitem);
-        if (typeof decrementNum !== "number") {
-          return  res.status(404).json({message:"quantity should be number"})
-        }   if  ( cartitem.quantity <= decrementNum) {
+        
+        // if (typeof decrementNum !== "number") {
+        //   return  res.status(404).json({message:"quantity should be number"})
+        // } 
+          if  ( cartitem.quantity <= 1) {
          return   res.status(202).json({message:"cant decrese "})
         }else{
 
             
-            cartitem.quantity -=decrementNum;
+            cartitem.quantity -=1;
             await cartitem.save() 
             res.status(200).json({message:"quantity is decreased "})
-        }          
+        }
     } catch (error) {
         
         res.status(500).json({message:"internal server error"})

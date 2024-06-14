@@ -16,7 +16,7 @@ const Signin = () => {
     e.preventDefault() 
 const response= await axios.post("http://localhost:3000/api/users/Login",{email,password})
 if (response.status ===200) {
-  console.log(response.data);
+  // console.log(response.data);
   const token = response.data.token
   const id =response.data.rest._id
   const cart=response.data.rest.cart.length
@@ -29,7 +29,7 @@ if (response.status ===200) {
   localStorage.setItem("id", id)
   localStorage.setItem("name", name)
   localStorage.setItem("cartlength", cart)
-  console.log("data is",response.data.rest.cart.length);
+  // console.log("data is",response.data.rest.cart.length);
   
  nav('/')
 

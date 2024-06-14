@@ -11,7 +11,7 @@ const Navbar = () => {
   const { logins, setLogins } = useContext(UseeContext);
 
   const loginsdta = localStorage.getItem('name')
-  console.log(loginsdta,"this is from logins");
+  // console.log(loginsdta,"this is from logins");
   const navigate = useNavigate();
   const [searchData, setSearchData] = useState('');
 

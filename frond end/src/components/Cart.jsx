@@ -33,9 +33,9 @@ const fetchcart= async ()=>{
 }
 
 fetchcart()
-},[userid,])
+},[userid,cartitems])
 
-console.log("podaaa",cartitems);
+
 
 
 const removeCart = (id) => {
@@ -48,16 +48,17 @@ const removeCart = (id) => {
 
 const handleIncrement = async (id) => {
   const response =await axiox.post(`http://localhost:3000/api/users/${userid}/carts/${id}`)
-  
-    setCount((value.quantity += 1));
+
+  // console.log("from increement"  ,response);
+   
   };
 
-  // const handleDecrement = (value) => {
-  //   if (value.qty && value.qty > 1) {
-  //     setCount((value.qty -= 1));
-  //   }
+ 
 
-  // };
+  const handleDecrement = async (id) => {
+    const response =await axiox.post(`http://localhost:3000/api/users/${userid}/carts/decrement/${id}`)
+
+  };
 
   return (
     <div>
@@ -82,14 +83,16 @@ const handleIncrement = async (id) => {
                     <h1 className="text-gray-600"> ₹{value.productid.price}</h1>
                   </div>
                   <div className="flex items-center">
-                    {/* <button
-                      onClick={() => handleDecrement(value)}
+                    { <button
+                      onClick={() => handleDecrement(value.productid._id)}
                       className="bg-gray-200 px-2 py-2 rounded-l"
                     >
                       {" "}
                       -
-                    </button> */}
-                    <span className="px-4">{value.qty}</span>
+                    </button> }
+
+                    <span className="px-4">{value.quantity}</span>
+
                     <button
                       onClick={() => handleIncrement(value.productid._id)}
                       className="bg-gray-200 px-2 py-2 rounded-l"
