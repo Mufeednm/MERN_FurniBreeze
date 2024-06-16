@@ -39,6 +39,7 @@ const App = () => {
 // <Route path='/Adminproductedit/:id'element={<Adminproductedit/>} >   </Route>
 // <Route path='/Productedit'element={<Productedit/>} >   </Route>
 // <Route path='/Payment'element={<Payment/>} >   </Route>
+// <Route path='/Orders'element={<Payment/>} >   </Route>
 // <Route path='/Beds'element={<Beds/>} >   </Route>
 // <Route path='/Chairs'element={<Chairs/>} >   </Route>
 // <Route path='/Sofas'element={<Sofas/>} >   </Route>
@@ -50,7 +51,7 @@ const App = () => {
 // <Route path='/Cart'element={<Cart/>} >   </Route>
 // <Route path='/Search/:term'element={<Search/>} >   </Route>
 // <Route path='/DisplayProduct'element={<DisplayProduct/>} >   </Route>
-  
+
 </Routes>
 
 
