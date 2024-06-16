@@ -4,6 +4,7 @@ import UseeContext from "../Globalcontext/UseConstext";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+
 const Cart = () => {
   const {
     user,
@@ -21,6 +22,7 @@ const Cart = () => {
   const [cartitems, setCartitems] = useState([]);
   const userid = localStorage.getItem("id");
 
+  // console.log(cartitems);
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -46,9 +48,8 @@ const Cart = () => {
   const handleIncrement = async (id) => {
     try {
       await axios.post(`http://localhost:3000/api/users/${userid}/carts/${id}`);
-      setCartitems(cartitems.map(item => 
-        item.productid._id === id ? { ...item, quantity: item.quantity + 1 } : item
-      ));
+
+    
     } catch (error) {
       console.error("Error incrementing cart item:", error);
     }
@@ -57,14 +58,55 @@ const Cart = () => {
   const handleDecrement = async (id) => {
     try {
       await axios.post(`http://localhost:3000/api/users/${userid}/carts/decrement/${id}`);
-      setCartitems(cartitems.map(item => 
-        item.productid._id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
-      ));
+   
     } catch (error) {
       console.error("Error decrementing cart item:", error);
     }
   };
 
+  const handlePayment = () => {
+    const options = {
+      "key": "rzp_test_3YFqc3qjVhg3aK", // Enter the Key ID generated from the Dashboard
+      "amount": "500", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "Acme Corp", //your business name
+      "description": "Test Transaction",
+      "image": "https://example.com/your_logo",
+      "order_id": "order_OKF7uMnC8b0A1A", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "handler": function (response){
+          console.log(response.razorpay_payment_id);
+          console.log(response.razorpay_order_id);
+          console.log(response.razorpay_signature);
+          alert(response.razorpay_payment_id);
+          alert(response.razorpay_order_id);
+          alert(response.razorpay_signature)
+      },
+      "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+          "name": "Gaurav Kumar", //your customer's name
+          "email": "gaurav.kumar@example.com", 
+          "contact": "9000090000"  //Provide the customer's phone number for better conversion rates 
+      },
+      "notes": {
+          "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+          "color": "#3399cc"
+      }
+  };
+  var rzp1 = new Razorpay(options);
+  rzp1.on('payment.failed', function (response){
+          alert(response.error.code);
+          alert(response.error.description);
+          alert(response.error.source);
+          alert(response.error.step);
+          alert(response.error.reason);
+          alert(response.error.metadata.order_id);
+          alert(response.error.metadata.payment_id);
+  });
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
   return (
     <div>
       <Navbar />
@@ -83,6 +125,7 @@ const Cart = () => {
                   <div className="flex-grow mx-4">
                     <h1 className="text-lg font-bold">{value.productid.title}</h1>
                     <h1 className="text-gray-600"> ₹{value.productid.price}</h1>
+                    <h1 className="text-black"> Total Price  ₹{value.productid.price * value.quantity }</h1>
                   </div>
                   <div className="flex items-center">
                     <button
@@ -110,8 +153,8 @@ const Cart = () => {
                 </div>
               </div>
             ))
-          ) : (
-            <p>Your cart is empty. Please add items to the cart.</p>
+            ) : (
+              <p>Your cart is empty. Please add items to the cart.</p>
           )}
         </div>
         {cartitems.length > 0 && (
@@ -123,6 +166,12 @@ const Cart = () => {
                 0
               )}
             </h1>
+            <button
+       onClick={handlePayment} 
+        className="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-600"
+      > 
+        Pay with Razorpay
+      </button>
           </div>
         )}
       </div>
