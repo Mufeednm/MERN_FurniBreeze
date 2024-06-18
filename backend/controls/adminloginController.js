@@ -11,25 +11,29 @@ const jwt =JsonWebToken
     const username =req.body.username
     const password=req.body.password
    
-    if (username!==process.env.Admin_username || password !== process.env.Admin_password) {
-        res.status(404).json({message:"wrong Admin"})
+    if (username == process.env.Admin_username && password == process.env.Admin_password) {
+       
+        // token
+        const token = jwt.sign({username},process.env.ADMIN_JWT_SECRET)
+        res.cookie('access_token' , token , {httpOnly:true }).status(200)
+        .json({message:"admin logined",token})
+        // cokkie
     }
-    // token
-    const token = jwt.sign({username},process.env.ADMIN_JWT_SECRET)
-    // cokkie
-    res.cookie('access_token' , token , {httpOnly:true })
-    .json({message:"admin logined",token})
+   
 
   
 }
+
 // Show all users
 export  const allusers =async (req,res)=>{
  
         const allusers = await User.find()
         if (allusers.length==0) {
             res.status(404).json({message:"no users"})
+        }else {
+            res.status(401).json({message:"unauthorised"})
         }
-        res.status(202).json(allusers)
+    
     }
 
 // Show user as per id
@@ -52,6 +56,7 @@ export const totalpurchased=async(req,res)=>{
    
     
     const totalproducts = findtotalpurchase.reduce((acc, order) => acc + order.products, 0);
+
     const totalRevenue = findtotalpurchase.reduce((acc, order) => acc + order.totalPrice, 0);
 
     const allProducts = findtotalpurchase.flatMap(order => order.products)

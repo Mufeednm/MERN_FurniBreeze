@@ -21,6 +21,8 @@ import Userslist from './Admin/Userslist'
 import Productedit from './Admin/Productedit'
 import Adminproductedit from './Admin/Adminproductedit'
 import Addproduct from './Admin/Addproduct'
+import Order from '../../backend/models/ordersModel'
+import OrderList from './pages/Order'
 const App = () => {
   return (
     <div>
@@ -39,7 +41,7 @@ const App = () => {
 // <Route path='/Adminproductedit/:id'element={<Adminproductedit/>} >   </Route>
 // <Route path='/Productedit'element={<Productedit/>} >   </Route>
 // <Route path='/Payment'element={<Payment/>} >   </Route>
-// <Route path='/Orders'element={<Payment/>} >   </Route>
+// <Route path='/Orders'element={<OrderList/>} >   </Route>
 // <Route path='/Beds'element={<Beds/>} >   </Route>
 // <Route path='/Chairs'element={<Chairs/>} >   </Route>
 // <Route path='/Sofas'element={<Sofas/>} >   </Route>

@@ -66,7 +66,13 @@ try {
   if (price) {updatedproduct.price=price }
   if (req.cloudinaryImageUrl){updatedproduct.productImg=req.cloudinaryImageUrl}
   if (category) {updatedproduct.category=category }
+
+
+
+
   await updatedproduct.save()
+
+  
   res.status(200).json({ message: "Product successfully updated" });
 } catch (error) {
   

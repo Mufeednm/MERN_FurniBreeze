@@ -159,19 +159,32 @@ export const decreaseQuantity = async (req,res)=>{
 
     // show all the orders
     export const vieworders= async (req,res)=>{
-           try {
-            const {userid}=req.params
+        try {
+            const { userid } = req.params;
             console.log(userid);
-            const findorder= await User.findById(userid).populate({
-                path:"orders",
-                populate:{path:"products"}
-            })
-            /
-            res.status(200).json(findorder.orders)
-           } catch (error) {
-            
-           }
-    }
+    
+            // Find the user by ID and populate orders and products
+            const findorder = await User.findById(userid).populate({
+                path: "orders",
+                populate: {
+                    path: "productId"
+                }
+            });
+    
+            // Check if user or orders are found
+            if (!findorder || !findorder.orders) {
+                return res.status(404).json({ message: "Orders not found for this user" });
+            }
+    
+            // Extract all products from the orders
+            const allProducts = findorder.orders.flatMap(order => order.products);
+    
+            res.status(200).json(allProducts);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Internal Server Error" });
+        }
+    };
 
 
     

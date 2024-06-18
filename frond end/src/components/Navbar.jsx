@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { RiAdminFill } from 'react-icons/ri';
 import { FaUser, FaSearch } from 'react-icons/fa';
+import { BsCartCheckFill } from "react-icons/bs";
 import { CiLogout } from 'react-icons/ci';
 import { useContext } from 'react';
 import UseeContext from '../Globalcontext/UseConstext';
@@ -87,6 +88,15 @@ const Navbar = () => {
               <AiOutlineShoppingCart />
             </button>
           </div>
+          <button
+              onClick={() => {
+                loginsdta ? navigate('/Orders') : navigate('/cart');
+              }}
+              className='text-4xl p-0 flex'
+            >
+              <span className='text-xs p-0'>{logins && user.order.length}</span>
+              <BsCartCheckFill />
+            </button>
         </div>
       </div>
 
