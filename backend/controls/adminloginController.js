@@ -31,7 +31,7 @@ export  const allusers =async (req,res)=>{
         if (allusers.length==0) {
             res.status(404).json({message:"no users"})
         }else {
-            res.status(401).json({message:"unauthorised"})
+            res.status(200).json(allusers)
         }
     
     }

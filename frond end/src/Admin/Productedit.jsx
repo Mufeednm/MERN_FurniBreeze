@@ -1,65 +1,75 @@
-import React, { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import UseeContext from '../Globalcontext/UseConstext'
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+// import UseeContext from '../Globalcontext/UseContext';
+import { Link } from 'react-router-dom';
 import { IoMdArrowBack } from "react-icons/io";
+import axios from 'axios';
+
 const Productedit = () => {
-  const {products,setProducts} =useContext(UseeContext)
-  const removeCart = (id) => {
-    // let itemremove = products.filter((v) => v.id != id);
-    // products = itemremove;
-    // 0;
-    setProducts(oldProduct=>(   oldProduct.filter((v) => v.id != id) )
-      
-    )
+  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/admin/Products`);
+        setProducts(response.data);  // Update to response.data to set the products correctly
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+  
+  // Uncomment and use the context if needed
+  // const { products, setProducts } = useContext(UseeContext);
+
+  const removeProduct = (id) => {
+    setProducts(oldProducts => oldProducts.filter(product => product.id !== id));
   };
-  const navigate =useNavigate()
+
   return (
     <div className="p-1 bg-slate-600">
-        <Link to={"/AdminPage"} >
-          <button          
-              className="text-white bg-slate-400 hover:bg-slate-500 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-5 w-full sm:w-auto"> 
-              <IoMdArrowBack /> </button>
-              </Link>
+      <Link to={"/AdminPage"}>
+        <button className="text-white bg-slate-400 hover:bg-slate-500 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-5 w-full sm:w-auto">
+          <IoMdArrowBack />
+        </button>
+      </Link>
       <h2 className="text-center">Products</h2>
       <div className="grid-cols-1">
-        {products.map((value, index) => {
-          return (
-            <div key={index} className="bg-orange-300 p-5 gap-3 m-2">
-              <div className="flex justify-between">
-                <img
-                  style={{ height: 150, padding: 10 }}
-                  src={value.image}
-                  alt=""
-                //   onClick={() => nav(`/${value.id}`)}
-                />
-                <div className="flex-grow mx-4">
-                  <h1 className="text-lg font-bold">{value.title}</h1>
-                  <h1 className="text-gray-600"> ₹{value.price}</h1>
-                </div>
-                <div className="flex items-center">
-                  <button
-                    onClick={() =>navigate(`/Adminproductedit/${value.id}`) }
-                    className="ml-4 text-amber-200 "
-                  >
-          Edit
-                  </button>
-              
-                </div>
+        {products.map((value, index) => (
+          <div key={index} className="bg-orange-300 p-5 gap-3 m-2">
+            <div className="flex justify-between">
+              <img
+                style={{ height: 150, padding: 10 }}
+                src={value.productImg}
+                alt={value.title}
+              />
+              <div className="flex-grow mx-4">
+                <h1 className="text-lg font-bold">{value.title}</h1>
+                <h1 className="text-gray-600">₹{value.price}</h1>
+              </div>
+              <div className="flex items-center">
                 <button
-                  onClick={() => removeCart(value.id)}
-                  className="ml-4 text-red-500"
+                  onClick={() => navigate(`/Adminproductedit/${value.id}`)}
+                  className="ml-4 text-amber-200"
                 >
-                  Remove
+                  Edit
                 </button>
               </div>
+              <button
+                onClick={() => removeProduct(value._id)}
+                className="ml-4 text-red-500"
+              >
+                Remove
+              </button>
             </div>
-          );
-        })}
-   
+          </div>
+        ))}
       </div>
-      </div>
-  )
-}
+    </div>
+  );
+};
 
-export default Productedit
+export default Productedit;

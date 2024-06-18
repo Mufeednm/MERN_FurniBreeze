@@ -12,7 +12,7 @@ router.post("/addproducts",uploadImage, addproduct);
 // login admin
 router.post("/login", adminlogin);
 // all Usesr
-router.use(admintoken)
+// router.use(admintoken)
 router.get("/Users",TrycatchMiddleware(allusers));
 // find  User as per id
 router.get("/Users/:id",finduser);

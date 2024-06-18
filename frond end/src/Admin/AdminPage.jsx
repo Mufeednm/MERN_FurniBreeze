@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { useNavigate } from 'react-router-dom'
 
 
@@ -12,6 +13,9 @@ const AdminPage = () => {
          <div className='   flex text-center justify-center  p-5 font-medium gap-6 '>
           <button  onClick={()=>navigate("/Userslist")}  className=' rounded-md bg-slate-200 p-5 hover:bg-slate-600 hover:text-white'>USERS</button>
           <button onClick={()=>navigate("/Productedit")} className=' bg-slate-200 rounded-md p-5  hover:bg-slate-600 hover:text-white'>Product Details</button>
+
+          <button onClick={()=>navigate("/Productedit")} className=' bg-slate-200 rounded-md p-5  hover:bg-slate-600 hover:text-white'>Order List</button>
+          
           <button onClick={()=>navigate("/Addproduct")} className=' bg-slate-200 rounded-md p-5  hover:bg-slate-600 hover:text-white'>ADD Product </button>
           <button onClick={()=>navigate("/")} className=' bg-slate-200 rounded-md p-5  hover:bg-slate-600 hover:text-white'>HOME PAGE </button>
          </div>
