@@ -63,37 +63,47 @@ export const verifypayment = async(req,res)=>{
         }
 
         const order = await razorpay.orders.fetch(razorpay_order_id);
-        
-        const user = await User.findById(order.notes.userid).populate({path:"cart",populate:{path:"productid"}})
-        // console.log(user.product);
-        
-// console.log(order);
+        console.log("Razorpay Order: ", order);
+
+        const user = await User.findById(order.notes.userid).populate({ path: "cart", populate: { path: "productid" } });
+        console.log("User with populated cart: ", user);
+
+        if (!user.cart || user.cart.length === 0) {
+            return res.status(400).send('User cart is empty');
+        }
+
+        const products = user.cart.map(item => ({
+            productId: item.productid._id,
+            title: item.productid.title,
+            quantity: item.quantity,
+            price: item.productid.price
+        }));
+        // console.log("Products to be added to order: ", products);
+
         const newOrder = new Order({
             userId: user.id,
-            products: user.cart.map(item => ({
-                productId: item.productid._id,
-                quantity: item.quantity,
-                price: item.productid.price
-            })),
-            amount: order.amount,
-            paymentId: razorpay_payment_id,
+            products: products,
+            purchaseDate: new Date(),
+            orderTime: new Date().toTimeString(),
             orderId: razorpay_order_id,
             totalPrice: order.amount / 100,
+            paymentId: razorpay_payment_id,
             status: 'paid'
         });
 
         await newOrder.save();
+        console.log("New Order saved: ", newOrder);
 
-        user.orders.push(newOrder)
+        user.orders.push(newOrder);
         await user.save();
+        console.log("User updated with new order: ", user);
 
         res.send('Payment verified successfully');
     } catch (error) {
         console.error(error);
         res.status(500).send(error.message);
     }
-};    
-
+};
 
 
 

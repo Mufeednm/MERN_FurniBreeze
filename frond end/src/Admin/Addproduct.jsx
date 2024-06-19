@@ -12,9 +12,7 @@ const Addproduct = () => {
     e.preventDefault();
     let newdata = new FormData(e.target);
     let title = newdata.get("title");
-    let 
-    
-    type = newdata.get("type");
+    let  type = newdata.get("type");
     let price = newdata.get("price");
     let image = newdata.get("image");
 
@@ -36,6 +34,7 @@ const Addproduct = () => {
     <div className="w-96 backdrop-blur-lg bg-opacity-80 rounded-lg shadow-lg p-5 bg-gray-900 text-white">
       <h2 className="text-2xl font-bold pb-5">ADD PRODUCT</h2>
       <form onSubmit={(e) => handlesubmit(e)}>
+
         <div className="mb-5">
           <label htmlFor="titlee" className="block mb-2 text-sm font-medium">
             title
@@ -43,12 +42,25 @@ const Addproduct = () => {
           <input
             type="text"
             name='title'
-      
             className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
             placeholder="Title"
             required
           />
         </div>
+
+        <div className="mb-5">
+          <label htmlFor="description" className="block mb-2 text-sm font-medium">
+          description
+          </label>
+          <input
+            type="text"
+            name='description'
+            className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
+            placeholder="description"
+            required
+          />
+        </div>
+
         <div className="mb-5">
           <label htmlFor="titlee" className="block mb-2 text-sm font-medium">
             type
@@ -62,8 +74,9 @@ const Addproduct = () => {
             required
           />
         </div>
+
         <div className="mb-4">
-          <label htmlFor="email" className="block mb-2 text-sm font-medium">
+          <label htmlFor="price" className="block mb-2 text-sm font-medium">
             PRICE
           </label>
           <input
@@ -75,6 +88,21 @@ const Addproduct = () => {
             required
           />
         </div>
+
+        <div className="mb-4">
+          <label htmlFor="crossprice" className="block mb-2 text-sm font-medium">
+            Crossprice
+          </label>
+          <input
+            type="number"
+            name='price'
+            id="crossprice"
+            className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
+            placeholder="price"
+            required
+          />
+        </div>
+
         <div className="mb-4">
           <label
             htmlFor="password"
@@ -91,6 +119,7 @@ const Addproduct = () => {
             required
             />
         </div>
+
         <div>
           <p className="text-red-500 pb-5"></p>
         </div>

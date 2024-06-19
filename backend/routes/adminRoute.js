@@ -1,7 +1,7 @@
 import express from "express";
 import { addproduct, adminproduct, deleteproduct, showbycategory, updateproduct,  } from "../controls/adminproductController.js";
 import uploadImage from "../middleware/uploadimage.js";
-import { adminlogin,allusers ,finduser, totalpurchased} from "../controls/adminloginController.js";
+import { adminlogin,allorders,allusers ,finduser, totalpurchased} from "../controls/adminloginController.js";
 import TrycatchMiddleware from "../middleware/errorMiddleware.js";
 import { admintoken } from "../middleware/adminMiddleware.js";
 const router = express.Router();
@@ -26,6 +26,8 @@ router.put("/Product/:id", updateproduct);
 router.delete("/Product/:productid", deleteproduct);
 // Total products purchased.
 router.get("/Totalproductspurchased", totalpurchased);
+// all Orders
+router.get("/adminAllorders", allorders);
 
 
 export default router

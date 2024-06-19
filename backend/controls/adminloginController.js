@@ -36,6 +36,21 @@ export  const allusers =async (req,res)=>{
     
     }
 
+
+
+    // show all orders
+    export  const allorders =async (req,res)=>{
+ 
+        const allorders = await Order.find()
+        if (allorders.length==0) {
+            res.status(404).json({message:"no users"})
+        }else {
+            res.status(200).json(allorders)
+        }
+    
+    }
+
+
 // Show user as per id
 
 export const finduser=async(req,res)=>{

@@ -12,7 +12,18 @@ const orderSchema = new mongoose.Schema({
             ref: "Product",
             required: true,
         },
-     
+        title: {
+            type: String,
+            required: true,
+        },
+        quantity: {
+            type: Number,
+            required: true,
+        },
+        price: {
+            type: Number,
+            required: true,
+        }
     }],
     purchaseDate: {
         type: Date,
@@ -33,6 +44,10 @@ const orderSchema = new mongoose.Schema({
         required: true,
     },
     paymentId: {
+        type: String,
+        required: true
+    },
+    status: {
         type: String,
         required: true
     }

@@ -22,7 +22,8 @@ import Productedit from './Admin/Productedit'
 import Adminproductedit from './Admin/Adminproductedit'
 import Addproduct from './Admin/Addproduct'
 import Order from '../../backend/models/ordersModel'
-import OrderList from './pages/Order'
+import OrderList from './Admin/OrderList'
+
 const App = () => {
   return (
     <div>
