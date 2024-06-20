@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import UseeContext from '../Globalcontext/UseContext';
 import { Link } from 'react-router-dom';
 import { IoMdArrowBack } from "react-icons/io";
 import axios from 'axios';
@@ -8,12 +7,12 @@ import axios from 'axios';
 const Productedit = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/admin/Products`);
-        setProducts(response.data);  // Update to response.data to set the products correctly
+        const response = await axios.get('http://localhost:3000/api/admin/products');
+        setProducts(response.data); // Assuming response.data is an array of products
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -22,11 +21,13 @@ const Productedit = () => {
     fetchProducts();
   }, []);
   
-  // Uncomment and use the context if needed
-  // const { products, setProducts } = useContext(UseeContext);
-
-  const removeProduct = (id) => {
-    setProducts(oldProducts => oldProducts.filter(product => product.id !== id));
+  const removeProduct = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/admin/Product/${id}`);
+      setProducts(oldProducts => oldProducts.filter(product => product._id !== id));
+    } catch (error) {
+      console.error("Error removing product:", error);
+    }
   };
 
   return (
@@ -52,7 +53,7 @@ const Productedit = () => {
               </div>
               <div className="flex items-center">
                 <button
-                  onClick={() => navigate(`/Adminproductedit/${value.id}`)}
+                  onClick={() => navigate(`/Adminproductedit/${value._id}`)}
                   className="ml-4 text-amber-200"
                 >
                   Edit

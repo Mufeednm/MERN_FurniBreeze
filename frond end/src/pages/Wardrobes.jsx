@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const Wardrobes = () => {
-  const { products } = useContext(UseeContext);
+  const [,,,,,,,,,,products ] = useContext(UseeContext);
   const nav = useNavigate();
 
   return (
@@ -31,7 +31,7 @@ const Wardrobes = () => {
             <div key={index} className="bg-slate-200">
               <img
                 className="w-full h-80 object-cover cursor-pointer"
-                src={e.image}
+                src={e.productImg}
                 alt=""
                 onClick={() => nav(`/${e.id}`)}
               />

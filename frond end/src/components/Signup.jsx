@@ -1,42 +1,31 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import UseeContext from '../Globalcontext/UseConstext';
+import axios from 'axios';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import axios from 'axios';
 
 const Signup = () => {
   const nav = useNavigate();
-
-  // const { user, setUser } = useContext(UseeContext);
   const [username, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  // console.log(username);
-  // console.log(email);
-  // console.log(password);
-
-
-  const handleSubmit = async  (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-//  const user = {name,email,password} 
-try {
-  const respoonse =await axios.post("http://localhost:3000/api/users/register",{email,username,password})
-  if (respoonse.status ===201){
-    console.log(respoonse);
-    nav('/Signin');
-  }
-} catch (error) {
-  console.log(error,"its wrong");
-  alert(error)
-}
-    // const newuser = { name, email, password, cart: [] };
-    // setUser([...user, newuser]);
-    // console.log(user);
-    // nav('/Signin');
-    // console.log(newuser);
+    try {
+      const response = await axios.post("http://localhost:3000/api/users/register", { email, username, password });
+      if (response.status === 201) {
+        nav('/signin');
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        alert(error.response.data.message); // Display the error message from the server
+        setError(error.response.data.message); // Display the error message from the server
+      } else {
+        setError("An unexpected error occurred. Please try again later.");
+      }
+    }
   };
 
   return (
@@ -72,10 +61,7 @@ try {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="password"
-                className="block mb-2 text-sm font-medium"
-              >
+              <label htmlFor="password" className="block mb-2 text-sm font-medium">
                 Your password
               </label>
               <input
@@ -87,9 +73,11 @@ try {
                 required
               />
             </div>
-            <div>
-              <p className="text-red-500 pb-5"></p>
-            </div>
+            {error && (
+              <div className="mb-4">
+                <p className="text-red-500">{error}</p>
+              </div>
+            )}
             <div className="flex flex-col sm:flex-row items-center justify-between mb-4">
               <button
                 type="submit"

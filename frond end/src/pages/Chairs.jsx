@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Chairs = () => {
-  const { products } = useContext(UseeContext);
+  const [,,,,,,,,,,products ] = useContext(UseeContext);
   const nav = useNavigate();
 
   return (
@@ -27,12 +27,12 @@ const Chairs = () => {
         </figure>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
           {products
-            .filter((value) => value.type === "chair")
+            .filter((value) => value.type === "chairs")
             .map((e, index) => (
               <div key={index} className="bg-slate-200">
                 <img
                   className="w-full h-80 object-cover cursor-pointer"
-                  src={e.image}
+                  src={e.productImg}
                   onClick={() => nav(`/${e.id}`)}
                   alt=""
                 />

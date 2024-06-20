@@ -55,29 +55,45 @@ export const showbycategory = async (req, res) => {
 
 // admin update product
 export const updateproduct =async (req,res)=>{
-try {
-  const {id}= req.params
-  const updatedproduct = await Product.findById(id)
-  // console.log(updatedproduct);
-  const {title,description, price, category} =req.body
-  console.log(title);
-  if (title) {updatedproduct.title=title }
-  if (description) {updatedproduct.description=description }
-  if (price) {updatedproduct.price=price }
-  if (req.cloudinaryImageUrl){updatedproduct.productImg=req.cloudinaryImageUrl}
-  if (category) {updatedproduct.category=category }
+  try {
+    const { id } = req.params;
+    const updatedproduct = await Product.findById(id);
 
+    // Destructure the fields from req.body
+    const { title, description, price, type } = req.body;
+    console.log(title);
+    console.log(description);
+    console.log(price);
+    console.log(type);
 
+    // Update fields if they exist in req.body
+    if (title) {
+      updatedproduct.title = title;
+    }
+    if (description) {
+      updatedproduct.description = description;
+    }
+    if (price) {
+      updatedproduct.price = price;
+    }
+    if (req.cloudinaryImageUrl) {
+      updatedproduct.productImg = req.cloudinaryImageUrl;
+    }
+    if (type) {
+      updatedproduct.type = type;
+    }
 
+    // Save the updated product
+    await updatedproduct.save();
 
-  await updatedproduct.save()
-
-  
-  res.status(200).json({ message: "Product successfully updated" });
-} catch (error) {
-  
-}
-}
+    // Respond with the updated product
+    res.status(200).json(updatedproduct);
+  } catch (error) {
+    // Handle errors appropriately
+    console.error("Error updating product:", error);
+    res.status(500).json({ error: "Failed to update product" });
+  }
+};
 
 // delete product Admin
 export const deleteproduct=async(req,res)=>{

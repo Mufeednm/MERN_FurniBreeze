@@ -15,7 +15,7 @@ export const signup = async (req, res) => {
     try {
         // Validate request body using Joi
         const validatedData = await authJoi.validateAsync(req.body);
-        console.log(validatedData);
+        // console.log(validatedData);
 
         // Check if user already exists with the provided email
         const existingUser = await User.findOne({ email: validatedData.email });
@@ -39,8 +39,8 @@ export const signup = async (req, res) => {
         // console.log(username);
 
         // Save the new user to the database
+        console.log(newUser);
         await newUser.save();
-
         // Respond with success message
         res.status(201).json({ message: "New user created" });
     } catch (error) {
@@ -62,6 +62,9 @@ export const signup = async (req, res) => {
 
 
 //user login
+
+
+
 
 export const login = async (req,res)=>{
     try {
