@@ -1,23 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { RiAdminFill } from 'react-icons/ri';
 import { FaUser, FaSearch } from 'react-icons/fa';
 import { BsCartCheckFill } from "react-icons/bs";
 import { CiLogout } from 'react-icons/ci';
-import { useContext } from 'react';
 import UseeContext from '../Globalcontext/UseConstext';
 
 const Navbar = () => {
-  const { logins, setLogins } = useContext(UseeContext);
+  useEffect(()=>{
 
-  const loginsdta = localStorage.getItem('name')
-  // console.log(loginsdta,"this is from logins");
+
+    
+  },[])
+  const [
+    user, setUser, 
+    logins, setLogins, 
+    cart, setCart, 
+    mydata, setMydata, 
+    render, setRender, 
+    products, setProducts, 
+    cartitems, setCartitems, 
+    orderDetails, setOrderDetails
+  ] = useContext(UseeContext);
+
+  const loginsdta = localStorage.getItem('name');
   const navigate = useNavigate();
   const [searchData, setSearchData] = useState('');
+  console.log("daaa",orderDetails);
 
   const handleLogout = () => {
-   localStorage.clear()
+    localStorage.clear();
     navigate('/');
   };
 
@@ -84,19 +97,18 @@ const Navbar = () => {
               }}
               className='text-4xl p-0 flex'
             >
-              <span className='text-xs p-0'>{logins && logins.cart.length}</span>
+              <span className='text-xs p-0'>{cartitems.length}</span>
               <AiOutlineShoppingCart />
             </button>
           </div>
-          <button
-              onClick={() => {
-                loginsdta ? navigate('/Orders') : navigate('/cart');
-              }}
+
+            <button
+              onClick={() => navigate('/Userorder')}
               className='text-4xl p-0 flex'
             >
-              <span className='text-xs p-0'>{logins && user.order.length}</span>
               <BsCartCheckFill />
             </button>
+   
         </div>
       </div>
 

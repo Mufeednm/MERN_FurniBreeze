@@ -30,7 +30,7 @@ const Sofas = () => {
                   className="w-full h-80 object-cover cursor-pointer"
                   src={e.productImg}
                   alt=""
-                  onClick={() => nav(`/${e.id}`)}
+                  onClick={() => nav(`/${e._id}`)}
                 />
 
                 <div className="text-center p-3">

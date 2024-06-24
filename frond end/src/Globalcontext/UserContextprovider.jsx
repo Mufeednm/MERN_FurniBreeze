@@ -9,7 +9,8 @@ const UserContextprovider = ({children})=>{
     const [mydata,setMydata]=useState({})
     const [render,setRender]=useState(false)
     const [products,setProducts]=useState([])
-
+    const [cartitems, setCartitems] = useState([]);
+    const [orderDetails, setOrderDetails] = useState(null);
  useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -25,7 +26,7 @@ const UserContextprovider = ({children})=>{
   }, []);
 
     return(
-        <UseeContext.Provider value={[user,setUser,logins,setLogins,cart,setCart,mydata,setMydata,render,setRender ,products,setProducts]}>
+        <UseeContext.Provider value={[user,setUser,logins,setLogins,cart,setCart,mydata,setMydata,render,setRender ,products,setProducts,cartitems, setCartitems,orderDetails, setOrderDetails]}>
             {children}
         </UseeContext.Provider>
     )

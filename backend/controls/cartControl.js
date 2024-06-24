@@ -167,7 +167,10 @@ export const decreaseQuantity = async (req,res)=>{
             const findorder = await User.findById(userid).populate({
                 path: "orders",
                 populate: {
-                    path: "productId"
+                    path: "products",
+                    populate :{
+                        path:"productId"
+                    }
                 }
             });
     
@@ -177,7 +180,8 @@ export const decreaseQuantity = async (req,res)=>{
             }
     
             // Extract all products from the orders
-            const allProducts = findorder.orders.flatMap(order => order.products);
+            console.log("daaa",findorder);
+            const allProducts = findorder.orders.flatMap(order => order);
     
             res.status(200).json(allProducts);
         } catch (error) {

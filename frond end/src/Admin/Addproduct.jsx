@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react'
-import UseeContext from '../Globalcontext/UseConstext'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext, useState } from 'react';
+import UseeContext from '../Globalcontext/UseConstext';
+import { useNavigate } from 'react-router-dom';
 import { IoMdArrowBack } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Addproduct = () => {
-  const { products, setProducts } = useContext(UseeContext)
+  const { products, setProducts } = useContext(UseeContext);
+  const navigate = useNavigate(); // Moved this outside the handlesubmit function
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -15,7 +16,7 @@ const Addproduct = () => {
     crossprice: '',
     image: null // Assuming you want to store the image file
   });
-  
+
   const handleChange = (e) => {
     if (e.target.name === 'image') {
       setFormData({ ...formData, [e.target.name]: e.target.files[0] });
@@ -23,9 +24,8 @@ const Addproduct = () => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
-  
+
   const handlesubmit = async (e) => {
-    const navigate = useNavigate()
     e.preventDefault();
     try {
       const newProductData = new FormData();
@@ -35,31 +35,33 @@ const Addproduct = () => {
       newProductData.append('price', formData.price);
       newProductData.append('crossprice', formData.crossprice);
       newProductData.append('image', formData.image);
-   
+      
       const response = await axios.post(`http://localhost:3000/api/admin/addproducts`, newProductData);
-      const newProduct = {
-        id: Math.random() * 10, // Generate a unique ID as per your requirements
-        title: formData.title,
-        description: formData.description,
-        type: formData.type,
-        price: parseFloat(formData.price),
-        crossprice: parseFloat(formData.crossprice),
-        image: URL.createObjectURL(formData.image)
-      };
+      if (response.status === 201) {
+        navigate("/Productedit");
 
-      setProducts([...products, newProduct]);
-      navigate("/AdminPage");
- 
-
+        const newProduct = {
+          id: response.data.id, // Assuming the response contains the new product's ID
+          title: response.title,
+          description: response.description,
+          type: response.type,
+          price: parseFloat(response.price),
+          crossprice: parseFloat(response.crossprice),
+          image: URL.createObjectURL(response.image)
+        };
+        
+        setProducts([...products, newProduct]);
+      } else {
+        throw new Error('Failed to add product');
+      }
     } catch (error) {
       console.error('Error adding product:', error);
     }
-
-  }
+  };
 
   return (
-    <div className='h-screen bg-zinc-700 flex items-center justify-center'> 
-      <div className="max-w-sm mx-auto ">
+    <div className='h-screen bg-zinc-700 flex items-center justify-center'>
+      <div className="max-w-sm mx-auto">
         <div className="w-96 backdrop-blur-lg bg-opacity-80 rounded-lg shadow-lg p-5 bg-gray-900 text-white">
           <h2 className="text-2xl font-bold pb-5">ADD PRODUCT</h2>
           <form onSubmit={handlesubmit}>
@@ -153,7 +155,7 @@ const Addproduct = () => {
               >
                 ADD
               </button>
-              <Link to={"/AdminPage"} >
+              <Link to="/AdminPage">
                 <button          
                   className="text-white bg-purple-600 hover:bg-purple-700 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-5 w-full sm:w-auto"> 
                   <IoMdArrowBack /> 
@@ -164,7 +166,7 @@ const Addproduct = () => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Addproduct
+export default Addproduct;

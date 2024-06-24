@@ -23,6 +23,7 @@ import Adminproductedit from './Admin/Adminproductedit'
 import Addproduct from './Admin/Addproduct'
 import Order from '../../backend/models/ordersModel'
 import OrderList from './Admin/OrderList'
+import Userorder from './components/Userorder'
 
 const App = () => {
   return (
@@ -34,13 +35,16 @@ const App = () => {
       
 
 <Route path='/'element={<Homepage/>} >   </Route>
-
-// <Route path='/Addproduct'element={<Addproduct/>} >   </Route>
+{/*admin pages */}
 // <Route path='/AdminLogin'element={<AdminLogin/>} >   </Route>
+
+{/* the above route makes admin token */}
+// <Route path='/Addproduct'element={<Addproduct/>} >   </Route>
 // <Route path='/AdminPage'element={<AdminPage/>} >   </Route>
 // <Route path='/Userslist'element={<Userslist/>} >   </Route>
 // <Route path='/Adminproductedit/:id'element={<Adminproductedit/>} >   </Route>
 // <Route path='/Productedit'element={<Productedit/>} >   </Route>
+{/* till here */}
 // <Route path='/Payment'element={<Payment/>} >   </Route>
 // <Route path='/Orders'element={<OrderList/>} >   </Route>
 // <Route path='/Beds'element={<Beds/>} >   </Route>
@@ -52,6 +56,7 @@ const App = () => {
 <Route path='/Signup'element={<Signup/>} ></Route>
 <Route path='/:id'element={<DisplayProduct/>} ></Route>
 // <Route path='/Cart'element={<Cart/>} >   </Route>
+// <Route path='/Userorder'element={<Userorder/>} >   </Route>
 // <Route path='/Search/:term'element={<Search/>} >   </Route>
 // <Route path='/DisplayProduct'element={<DisplayProduct/>} >   </Route>
 

@@ -61,7 +61,7 @@ export const verifypayment = async(req,res)=>{
         if (generatedSignature !== razorpay_signature) {
             return res.status(400).send('Payment verification failed');
         }
-
+            
         const order = await razorpay.orders.fetch(razorpay_order_id);
         console.log("Razorpay Order: ", order);
 
@@ -95,6 +95,7 @@ export const verifypayment = async(req,res)=>{
         console.log("New Order saved: ", newOrder);
 
         user.orders.push(newOrder);
+        user.cart=[];
         await user.save();
         console.log("User updated with new order: ", user);
 

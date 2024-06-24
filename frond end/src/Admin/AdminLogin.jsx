@@ -20,7 +20,7 @@ try {
     console.log("admintoken",adminTokens);
 
  alert("admin logged successfully")
- navigate("/Adminpage")
+ navigate("/AdminPage")
   }else{
     alert("login failed unautharised")
   }

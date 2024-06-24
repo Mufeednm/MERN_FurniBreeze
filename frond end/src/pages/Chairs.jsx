@@ -33,7 +33,7 @@ const Chairs = () => {
                 <img
                   className="w-full h-80 object-cover cursor-pointer"
                   src={e.productImg}
-                  onClick={() => nav(`/${e.id}`)}
+                  onClick={() => nav(`/${e._id}`)}
                   alt=""
                 />
                 <div className="text-center p-3">

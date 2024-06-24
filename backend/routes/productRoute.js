@@ -28,7 +28,7 @@ router.post("/:id/carts/decrement/:productid",decreaseQuantity)
 // remove   product from cart
 router.post("/:id/carts/remove/:productid",removeCart)
 // get all the order
-router.get("/allorders/:userid",vieworders)
+router.get("/userorders/:userid",vieworders)
 
 
 //WISHLIST 

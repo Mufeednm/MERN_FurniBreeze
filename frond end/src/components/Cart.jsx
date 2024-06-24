@@ -5,20 +5,14 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 const Cart = () => {
-  const {
-    user,
-    setUser,
-    logins,
-    setLogins,
-    cart,
-    setCart,
-    mydata,
-    setMydata,
-    render,
-    setRender,
-  } = useContext(UseeContext);
+  const [
+    user,setUser,logins,setLogins,cart,setCart,mydata,setMydata,render,setRender ,products,setProducts,cartitems, setCartitems
+  ]
+   = useContext(UseeContext);
 
-  const [cartitems, setCartitems] = useState([]);
+
+
+
   const userid = localStorage.getItem("id");
 
   useEffect(() => {

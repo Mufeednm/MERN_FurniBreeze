@@ -31,8 +31,7 @@ const DisplayProduct = () => {
 
     const getid= async ()=>{
 const response = await axios.get(`http://localhost:3000/api/users/products/${id}`)
-setDatas(response.data.productbyId);
-} 
+setDatas(response.data.productbyId);} 
 getid()
 }, [id]);
 console.log("res",datas);
