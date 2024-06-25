@@ -11,30 +11,42 @@ const Signin = () => {
   const { user, setLogins } = useContext(UseeContext)
   const [email,setEmail] = useState("")
   const [password, setPasswords] = useState("")
+  const [error, setError] = useState('');
 
   const handlesubmit =  async (e) => {
     
     e.preventDefault() 
-const response= await axios.post("http://localhost:3000/api/users/Login",{email,password})
-if (response.status ===200) {
-  // console.log(response.data);
-  const token = response.data.token
-  const id =response.data.rest._id
-  const cart=response.data.rest.cart.length
-  
-  const name=response.data.rest.username
+    try {
+      
+      const response= await axios.post("http://localhost:3000/api/users/Login",{email,password})
+      if (response.status ===200) {
+        // console.log(response.data);
+        const token = response.data.token
+        const id =response.data.rest._id
+        const cart=response.data.rest.cart.length
+        
+        const name=response.data.rest.username
+        
+        
+        
+        localStorage.setItem("token", token)
+        localStorage.setItem("id", id)
+        localStorage.setItem("name", name)
+        localStorage.setItem("cartlength", cart)
+        // console.log("data is",response.data.rest.cart.length);
+        
+        nav('/')
+        
+      }
 
- 
-
-  localStorage.setItem("token", token)
-  localStorage.setItem("id", id)
-  localStorage.setItem("name", name)
-  localStorage.setItem("cartlength", cart)
-  // console.log("data is",response.data.rest.cart.length);
-  
- nav('/')
-
-}
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        alert(error.response.data.message); // Display the error message from the server
+        setError(error.response.data.message); // Display the error message from the server
+   
+    }
+  }
+    
 
 
     // let userData = user.find((item) => item.email === gmail)
@@ -83,7 +95,13 @@ if (response.status ===200) {
             <div>
               <p className="text-red-500 pb-5"></p>
             </div>
+            {error && (
+             
+             <p className="text-red-500">{error}</p>
+       
+         )}
             <div className="flex items-center justify-between mb-4">
+          
               <button
                 type="submit"
                 className="text-white bg-purple-600 hover:bg-purple-700 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-5 w-full sm:w-auto"

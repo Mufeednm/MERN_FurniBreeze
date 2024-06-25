@@ -25,6 +25,7 @@ try {
     alert("login failed unautharised")
   }
 } catch (error) {
+  alert(error.response.data.message)
   console.log(error);
 }
 

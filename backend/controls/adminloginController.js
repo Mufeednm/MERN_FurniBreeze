@@ -18,6 +18,8 @@ const jwt =JsonWebToken
         res.cookie('access_token' , token , {httpOnly:true }).status(200)
         .json({message:"admin logined",token})
         // cokkie
+    }else{
+        res.status(400).json({message:"You are not the admin "})
     }
    
 

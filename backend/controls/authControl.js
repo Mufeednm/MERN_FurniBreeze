@@ -77,7 +77,7 @@ export const login = async (req,res)=>{
         if(!validUser) return res.status(401).json({message : "user not found"})
 
         if(validUser.isDeleted ===true){
-            return res.status(400).json({message:"user is blocked"})
+            return res.status(401).json({message:"user is blocked"})
         }
 
         //check password that enter by user to check valid or not

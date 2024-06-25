@@ -50,7 +50,8 @@ const userid= localStorage.getItem("id")
    
 
     const response=await axios.post(`http://localhost:3000/api/users/${userid}/cart/${id}`)
-console.log(response);
+    navigate("/Cart")
+// console.log(response);
 
 
 

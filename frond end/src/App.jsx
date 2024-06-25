@@ -1,5 +1,5 @@
-import React from 'react'
-import { Routes,Route } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import DisplayProduct from './pages/DisplayProduct'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
@@ -16,55 +16,51 @@ import Cart from './components/Cart'
 import Search from './components/Search'
 import AdminPage from './Admin/AdminPage'
 import AdminLogin from './Admin/AdminLogin'
-import UserContextprovider from './Globalcontext/UserContextprovider'
-import Userslist from './Admin/Userslist'
-import Productedit from './Admin/Productedit'
-import Adminproductedit from './Admin/Adminproductedit'
-import Addproduct from './Admin/Addproduct'
-import Order from '../../backend/models/ordersModel'
+import UserContextProvider from './Globalcontext/UserContextprovider'
+import UsersList from './Admin/Userslist'
+import ProductEdit from './Admin/Productedit'
+import AdminProductEdit from './Admin/Adminproductedit'
+import AddProduct from './Admin/Addproduct'
 import OrderList from './Admin/OrderList'
-import Userorder from './components/Userorder'
+import UserOrder from './components/Userorder'
+import PrivateRoute from './Admin/PrivateRoute'
+import UseeContext from './Globalcontext/UseConstext'
+
 
 const App = () => {
+
+  
   return (
     <div>
-      <UserContextprovider>
+   
+     
+        <Routes>
+          <Route path='/' element={<Homepage />} />
+          {/* Admin pages */}
+          <Route path='/AdminLogin' element={<AdminLogin />} />
+          <Route path='/Addproduct' element={<PrivateRoute element={AddProduct} />} />
+          <Route path='/AdminPage' element={<PrivateRoute element={AdminPage} />} />
+          <Route path='/Userslist' element={<PrivateRoute element={UsersList} />} />
+          <Route path='/Adminproductedit/:id' element={<PrivateRoute element={AdminProductEdit} />} />
+          <Route path='/Productedit' element={<PrivateRoute element={ProductEdit} />} />
+          <Route path='/Payment' element={<Payment />} />
+          <Route path='/Orders' element={<PrivateRoute element={OrderList} />} />
+          {/* Product pages */}
+          <Route path='/Beds' element={<Beds />} />
+          <Route path='/Chairs' element={<Chairs />} />
+          <Route path='/Sofas' element={<Sofas />} />
+          <Route path='/Table' element={<Table />} />
+          <Route path='/Wardrobes' element={<Wardrobes />} />
+          {/* User pages */}
+          <Route path='/Signin' element={<Signin />} />
+          <Route path='/Signup' element={<Signup />} />
+          <Route path='/Cart' element={<Cart />} />
+          <Route path='/Userorder' element={<UserOrder />} />
+          <Route path='/Search/:term' element={<Search />} />
+          <Route path='/:id' element={<DisplayProduct />} />
+        </Routes>
 
-    
-<Routes>
-      
-
-<Route path='/'element={<Homepage/>} >   </Route>
-{/*admin pages */}
-// <Route path='/AdminLogin'element={<AdminLogin/>} >   </Route>
-
-{/* the above route makes admin token */}
-// <Route path='/Addproduct'element={<Addproduct/>} >   </Route>
-// <Route path='/AdminPage'element={<AdminPage/>} >   </Route>
-// <Route path='/Userslist'element={<Userslist/>} >   </Route>
-// <Route path='/Adminproductedit/:id'element={<Adminproductedit/>} >   </Route>
-// <Route path='/Productedit'element={<Productedit/>} >   </Route>
-{/* till here */}
-// <Route path='/Payment'element={<Payment/>} >   </Route>
-// <Route path='/Orders'element={<OrderList/>} >   </Route>
-// <Route path='/Beds'element={<Beds/>} >   </Route>
-// <Route path='/Chairs'element={<Chairs/>} >   </Route>
-// <Route path='/Sofas'element={<Sofas/>} >   </Route>
-// <Route path='/Table'element={<Table/>} >   </Route>
-// <Route path='/Wardrobes'element={<Wardrobes/>} >   </Route>
-<Route path='/Signin'element={<Signin/>} ></Route>
-<Route path='/Signup'element={<Signup/>} ></Route>
-<Route path='/:id'element={<DisplayProduct/>} ></Route>
-// <Route path='/Cart'element={<Cart/>} >   </Route>
-// <Route path='/Userorder'element={<Userorder/>} >   </Route>
-// <Route path='/Search/:term'element={<Search/>} >   </Route>
-// <Route path='/DisplayProduct'element={<DisplayProduct/>} >   </Route>
-
-</Routes>
-
-
-      </UserContextprovider>
-
+  
     </div>
   )
 }

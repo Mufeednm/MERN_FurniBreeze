@@ -11,6 +11,8 @@ const UserContextprovider = ({children})=>{
     const [products,setProducts]=useState([])
     const [cartitems, setCartitems] = useState([]);
     const [orderDetails, setOrderDetails] = useState(null);
+    const [adminuser, setAdminuser] = useState(null);
+
  useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -25,8 +27,24 @@ const UserContextprovider = ({children})=>{
     fetchProducts();
   }, []);
 
+  useEffect(()=>{
+    const token = localStorage.getItem('adminToken')
+    if (token) {
+      setAdminuser({ isAdmin: true })
+    }
+  },[])
+  const login = (token) => {
+    localStorage.setItem('adminToken', token)
+    setAdminuser({ isAdmin: true })
+  }
+
+  const logout = () => {
+    localStorage.removeItem('adminToken')
+    setAdminuser(null)
+  }
+  
     return(
-        <UseeContext.Provider value={[user,setUser,logins,setLogins,cart,setCart,mydata,setMydata,render,setRender ,products,setProducts,cartitems, setCartitems,orderDetails, setOrderDetails]}>
+        <UseeContext.Provider value={[user,setUser,logins,setLogins,cart,setCart,mydata,setMydata,render,setRender ,products,setProducts,cartitems, setCartitems,orderDetails, setOrderDetails,adminuser, setAdminuser,login,logout]}>
             {children}
         </UseeContext.Provider>
     )
