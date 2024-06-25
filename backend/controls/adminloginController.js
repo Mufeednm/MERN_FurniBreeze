@@ -37,7 +37,28 @@ export  const allusers =async (req,res)=>{
         }
     
     }
+// block users
+export  const blockuser =async (req,res)=>{
+ 
+    const {userid}=req.params
+    const blockuser =await User.findByIdAndUpdate({_id:userid}, {$set:{isDeleted:true}})
+ if (!blockuser) {
+    res.status(400).json({message:"user not found"})
+ }
+  res.status(200).json({message:"user is blocked"})
 
+}
+// unBlock user
+export  const unblockuser =async (req,res)=>{
+ 
+    const {userid}=req.params
+    const unblockuser =await User.findByIdAndUpdate({_id:userid}, {$set:{isDeleted:false}})
+ if (!unblockuser) {
+    res.status(400).json({message:"user not found"})
+ }
+  res.status(200).json({message:"user is unblocked"})
+
+}
 
 
     // show all orders

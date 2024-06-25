@@ -1,7 +1,7 @@
 import express from "express";
 import { addproduct, adminproduct, deleteproduct, showbycategory, updateproduct,  } from "../controls/adminproductController.js";
 import uploadImage from "../middleware/uploadimage.js";
-import { adminlogin,allorders,allusers ,finduser, totalpurchased} from "../controls/adminloginController.js";
+import { adminlogin,allorders,allusers ,blockuser,finduser, totalpurchased, unblockuser} from "../controls/adminloginController.js";
 import TrycatchMiddleware from "../middleware/errorMiddleware.js";
 import { admintoken } from "../middleware/adminMiddleware.js";
 const router = express.Router();
@@ -11,6 +11,11 @@ const router = express.Router();
 router.post("/addproducts",uploadImage, addproduct);
 // login admin
 router.post("/login", adminlogin);
+// block User
+router.post("/Userblock/:userid", blockuser);
+// unblock User
+router.post("/Userunblock/:userid", unblockuser);
+
 // all Usesr
 // router.use(admintoken)
 router.get("/Users",TrycatchMiddleware(allusers));
