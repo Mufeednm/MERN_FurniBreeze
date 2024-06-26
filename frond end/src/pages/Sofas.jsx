@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const Sofas = () => {
-  const [,,,,,,,,,,products ] = useContext(UseeContext);
+  const [user,setUser,logins,setLogins,cart,setCart,mydata,setMydata,render,setRender ,products,setProducts,cartitems, setCartitems,orderDetails, setOrderDetails,adminuser, setAdminuser,login,logout] = useContext(UseeContext);
   const nav = useNavigate();
 
   return (
