@@ -63,15 +63,18 @@ export  const unblockuser =async (req,res)=>{
 
     // show all orders
     export  const allorders =async (req,res)=>{
- 
-        const allorders = await Order.find()
-        if (allorders.length==0) {
-            res.status(404).json({message:"no users"})
-        }else {
-            res.status(200).json(allorders)
+        try {
+            const allorders = await Order.find().populate({ path: "userId" });
+            // console.log("orderssssss", allorders);
+            if (allorders.length === 0) {
+                res.status(404).json({ message: "no users" });
+            } else {
+                res.status(200).json(allorders);
+            }
+        } catch (error) {
+            res.status(500).json({ message: "Server error", error: error.message });
         }
-    
-    }
+    };
 
 
 // Show user as per id

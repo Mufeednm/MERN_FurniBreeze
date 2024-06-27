@@ -44,10 +44,12 @@ export const signup = async (req, res) => {
         // Respond with success message
         res.status(201).json({ message: "New user created" });
     } catch (error) {
+        
         // Handle Joi validation errors
         if (error.isJoi) {
             return res.status(400).json({ message: "Invalid data", details: error.details });
         }
+     
 
         // Handle other errors
         console.error("Error during user registration:", error);

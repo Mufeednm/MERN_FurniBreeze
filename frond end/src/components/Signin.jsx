@@ -4,7 +4,7 @@ import UseeContext from '../Globalcontext/UseConstext'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import axios from "axios"
-
+import {  toast } from 'react-toastify';
 const Signin = () => {
   const nav = useNavigate()
   
@@ -41,7 +41,7 @@ const Signin = () => {
 
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        alert(error.response.data.message); // Display the error message from the server
+        toast(error.response.data.message); // Display the error message from the server
         setError(error.response.data.message); // Display the error message from the server
    
     }

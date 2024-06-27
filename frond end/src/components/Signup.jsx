@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
 import Footer from './Footer';
-
+import { toast } from 'react-toastify';
 const Signup = () => {
   const nav = useNavigate();
   const [username, setName] = useState('');
@@ -20,7 +20,7 @@ const Signup = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        alert(error.response.data.message); // Display the error message from the server
+        (error.response.data.message); // Display the error message from the server
         setError(error.response.data.message); // Display the error message from the server
       } else {
         setError("An unexpected error occurred. Please try again later.");
