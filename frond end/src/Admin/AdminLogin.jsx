@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios, { Axios } from 'axios';
+import {  toast } from 'react-toastify';
 const AdminLogin = () => {
   const navigate = useNavigate()
   const [username, setUsername] = useState("");
@@ -19,7 +20,7 @@ try {
     localStorage.setItem("adminToken",adminTokens)
     console.log("admintoken",adminTokens);
 
- alert("admin logged successfully")
+ toast("admin logged successfully")
  navigate("/AdminPage")
   }else{
     alert("login failed unautharised")
@@ -65,7 +66,7 @@ try {
             type="submit"
             className="text-white bg-purple-600 hover:bg-purple-700 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-5 w-full sm:w-auto"
           >
-            Sign up
+            LOG IN
           </button>
         
         </div>
