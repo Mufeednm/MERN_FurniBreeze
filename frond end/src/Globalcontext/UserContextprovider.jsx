@@ -18,7 +18,7 @@ const UserContextprovider = ({children})=>{
       try {
         // const response = await axios.get('http://localhost:3000/api/users/products');
         const response = await axios.get('https://mern-furnibreeze.onrender.com/api/users/products');
-      
+       console.log(response,"this is resp");
         setProducts(response.data.allProducts);
       } catch (error) {
         console.error('Error fetching products:', error);
