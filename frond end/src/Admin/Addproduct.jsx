@@ -36,7 +36,8 @@ const Addproduct = () => {
       newProductData.append('crossprice', formData.crossprice);
       newProductData.append('image', formData.image);
       
-      const response = await axios.post(`http://localhost:3000/api/admin/addproducts`, newProductData);
+      // const response = await axios.post(`http://localhost:3000/api/admin/addproducts`, newProductData);
+      const response = await axios.post(`https://mern-furnibreeze.onrender.com/api/admin/addproducts`, newProductData);
       if (response.status === 201) {
         navigate("/Productedit");
 

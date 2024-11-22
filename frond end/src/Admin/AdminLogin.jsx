@@ -13,7 +13,8 @@ const AdminLogin = () => {
   const handleadmin =async (e)=>{
     e.preventDefault()
 try {
-  const response= await axios.post(`http://localhost:3000/api/admin/login`,{username,password})
+  // const response= await axios.post(`http://localhost:3000/api/admin/login`,{username,password})
+  const response= await axios.post(`https://mern-furnibreeze.onrender.com/api/admin/login`,{username,password})
   console.log(response);
   if(response.status ==200){
     const adminTokens = response.data.token

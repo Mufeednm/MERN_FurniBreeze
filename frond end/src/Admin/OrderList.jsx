@@ -12,7 +12,8 @@ const OrderList = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/admin/adminAllorders');
+        // const response = await axios.get('http://localhost:3000/api/admin/adminAllorders');
+        const response = await axios.get('hhttps://mern-furnibreeze.onrender.com/api/admin/adminAllorders');
         setOrderlist(response.data);
         calculateTotals(response.data);
       } catch (error) {

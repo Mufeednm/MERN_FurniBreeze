@@ -16,7 +16,8 @@ const UserContextprovider = ({children})=>{
  useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/users/products');
+        // const response = await axios.get('http://localhost:3000/api/users/products');
+        const response = await axios.get('https://mern-furnibreeze.onrender.com/api/users/products');
       
         setProducts(response.data.allProducts);
       } catch (error) {

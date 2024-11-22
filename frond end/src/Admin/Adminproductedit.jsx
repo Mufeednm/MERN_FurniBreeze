@@ -15,7 +15,8 @@ const AdminProductEdit = () => {
   useEffect(() => {
     const productFind = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/users/products/${id}`);
+        // const response = await axios.get(`http://localhost:3000/api/users/products/${id}`);
+        const response = await axios.get(`https://mern-furnibreeze.onrender.com/api/users/products/${id}`);
         if (response.status === 200) {
           const product = response.data.productbyId;
           setResult(product);

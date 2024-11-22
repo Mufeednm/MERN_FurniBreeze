@@ -36,7 +36,8 @@ const DisplayProduct = () => {
   const userid = localStorage.getItem('id');
 
   const addToCart = async (id) => {
-    const response = await axios.post(`http://localhost:3000/api/users/${userid}/cart/${id}`);
+    // const response = await axios.post(`http://localhost:3000/api/users/${userid}/cart/${id}`);
+    const response = await axios.post(`https://mern-furnibreeze.onrender.com/api/users/${userid}/cart/${id}`);
     navigate('/Cart');
   };
 
