@@ -1,33 +1,28 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { RiAdminFill } from 'react-icons/ri';
-import { FaUser, FaSearch } from 'react-icons/fa';
-import { BsCartCheckFill } from "react-icons/bs";
+import { FaUser, FaSearch,  } from 'react-icons/fa';
+import { BsCartCheckFill } from 'react-icons/bs';
 import { CiLogout } from 'react-icons/ci';
 import UseeContext from '../Globalcontext/UseConstext';
 
 const Navbar = () => {
-  useEffect(()=>{
-
-
-    
-  },[])
   const [
-    user, setUser, 
-    logins, setLogins, 
-    cart, setCart, 
-    mydata, setMydata, 
-    render, setRender, 
-    products, setProducts, 
-    cartitems, setCartitems, 
+    user, setUser,
+    logins, setLogins,
+    cart, setCart,
+    mydata, setMydata,
+    render, setRender,
+    products, setProducts,
+    cartitems, setCartitems,
     orderDetails, setOrderDetails
   ] = useContext(UseeContext);
 
   const loginsdta = localStorage.getItem('name');
   const navigate = useNavigate();
   const [searchData, setSearchData] = useState('');
-  console.log("daaa",orderDetails);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -41,94 +36,92 @@ const Navbar = () => {
   };
 
   return (
-    <div className='Navbar bg-white'>
-      <div className='navbar flex flex-col lg:flex-row justify-between items-center lg:items-stretch px-4 lg:px-16 py-2 lg:py-4'>
-        <div className='flex items-center'>
-          <Link to='/'>
-            <h2 className='text-3xl lg:text-3xl'>FurniBreeze</h2>
+    <div className="Navbar bg-gray-50 shadow-lg">
+      <div className="navbar flex flex-col lg:flex-row justify-between items-center px-6 py-4 border-b-2 border-gray-200">
+        {/* Logo */}
+        <div className="flex items-center justify-between w-full lg:w-auto">
+          <Link to="/">
+            <h2 className="text-3xl font-bold text-amber-600 hover:text-amber-500 transition-colors duration-300">FurniBreeze</h2>
           </Link>
-
-          <div className='flex items-center lg:ml-32'>
-            <form onSubmit={handleSearchClick} className='flex flex-wrap lg:flex-nowrap items-center'>
-              <div className='relative w-full lg:w-72'>
-                <input
-                  type='text'
-                  placeholder='Search'
-                  onChange={(e) => setSearchData(e.target.value)}
-                  value={searchData}
-                  className='border p-2 lg:p-4 rounded-l focus:outline-none w-full'
-                />
-                <button
-                  type='submit'
-                  className='bg-blue-500 text-white p-2 lg:p-4 rounded-r absolute right-0 top-0 bottom-0'
-                >
-                  <FaSearch />
-                </button>
-              </div>
-            </form>
-          </div>
+          {/* Mobile Menu Button */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+            className="lg:hidden text-2xl text-gray-700"
+          >
+            {isMobileMenuOpen ? 'X' : '☰'}
+          </button>
         </div>
 
-        <div className='flex items-center gap-4 lg:ml-4'>
-          <p className='text-sm lg:text-base'>{loginsdta ? loginsdta : 'not logged'}</p>
+        {/* Search Bar */}
+        <form onSubmit={handleSearchClick} className="flex items-center justify-center w-full lg:max-w-lg mx-auto bg-gray-100 rounded-full px-4 py-2 shadow-md mt-4 lg:mt-0">
+          <input
+            type="text"
+            placeholder="Search Furniture"
+            onChange={(e) => setSearchData(e.target.value)}
+            value={searchData}
+            className="border-none p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-300 w-full"
+          />
+          <button
+            type="submit"
+            className="bg-amber-600 text-white p-2 rounded-full ml-2 hover:bg-amber-700 transition-colors duration-300"
+          >
+            <FaSearch />
+          </button>
+        </form>
 
-          <div>
-            <button onClick={handleLogout}>
-              <CiLogout />
-            </button>
-          </div>
+        {/* User Options (Visible on large screens) */}
+        <div className="hidden lg:flex items-center gap-8 text-gray-700 mt-4 lg:mt-0">
+          <p className="text-sm lg:text-base font-semibold">{loginsdta ? loginsdta : 'Guest'}</p>
 
-          <Link to='/signup'>
-            <button className='text-4xl'>
-              <FaUser />
-            </button>
+          <button onClick={handleLogout} className="text-lg hover:text-red-500 transition-colors duration-300">
+            <CiLogout />
+          </button>
+
+          <Link to="/signup">
+            <FaUser className="text-2xl hover:text-teal-600 transition-colors duration-300" />
           </Link>
 
-          <div className='admin'>
-            <button onClick={() => navigate('/AdminLogin')} className='text-4xl'>
-              <RiAdminFill />
-            </button>
-          </div>
+          <button
+            onClick={() => navigate('/AdminLogin')}
+            className="text-2xl hover:text-green-600 transition-colors duration-300"
+          >
+            <RiAdminFill />
+          </button>
 
-          <div className='cart button'>
-            <button
-              onClick={() => {
-                loginsdta ? navigate('/cart') : navigate('/Signin');
-              }}
-              className='text-4xl p-0 flex'
-            >
-              <span className='text-xs p-0'>{cartitems.length}</span>
-              <AiOutlineShoppingCart />
-            </button>
-          </div>
+          <button
+  onClick={() => {
+    loginsdta ? navigate('/cart') : navigate('/Signin');
+  }}
+  className="relative flex items-center gap-1 text-2xl hover:text-orange-600 transition-colors duration-300"
+>
+  <AiOutlineShoppingCart />
+  {cartitems.length > 0 && (
+    <span className="absolute top-0 right-0 text-xs font-bold bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center">
+      {cartitems.length}
+    </span>
+  )}
+</button>
 
-            <button
-              onClick={() => navigate('/Userorder')}
-              className='text-4xl p-0 flex'
-            >
-              <BsCartCheckFill />
-            </button>
-   
+          <button
+            onClick={() => navigate('/Userorder')}
+            className="text-2xl hover:text-teal-500 transition-colors duration-300"
+          >
+            <BsCartCheckFill />
+          </button>
         </div>
       </div>
 
-      <div className='category bg-orange-300'>
-        <div className='flex justify-around p-5'>
-          <Link to='/Sofas'>
-            <button>Sofas</button>
-          </Link>
-          <Link to='/Beds'>
-            <button>Beds</button>
-          </Link>
-          <Link to='/Table'>
-            <button>Table</button>
-          </Link>
-          <Link to='/Chairs'>
-            <button>Chairs</button>
-          </Link>
-          <Link to='/Wardrobes'>
-            <button>Wardrobes</button>
-          </Link>
+      {/* Categories (Dropdown on Mobile) */}
+      <div className={`category bg-amber-600 ${isMobileMenuOpen ? 'block' : 'hidden'} lg:block`}>
+        <div className="flex flex-col lg:flex-row justify-around py-2 lg:py-4 px-4 lg:px-5">
+          {['Sofas', 'Beds', 'Table', 'Chairs', 'Wardrobes'].map((category, index) => (
+            <Link to={`/${category}`} key={category}>
+              <button className="text-lg font-semibold text-white hover:bg-amber-500 hover:text-white px-4 py-2 rounded-md transition-colors duration-300">
+          
+                {category}
+              </button>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

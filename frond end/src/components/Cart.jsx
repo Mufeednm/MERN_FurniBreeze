@@ -6,12 +6,8 @@ import Footer from "./Footer";
 
 const Cart = () => {
   const [
-    user,setUser,logins,setLogins,cart,setCart,mydata,setMydata,render,setRender ,products,setProducts,cartitems, setCartitems
-  ]
-   = useContext(UseeContext);
-
-
-
+    user, setUser, logins, setLogins, cart, setCart, mydata, setMydata, render, setRender, products, setProducts, cartitems, setCartitems
+  ] = useContext(UseeContext);
 
   const userid = localStorage.getItem("id");
 
@@ -26,7 +22,7 @@ const Cart = () => {
     };
 
     fetchCart();
-  }, [userid,cartitems]);
+  }, [userid, cartitems]);
 
   const removeCart = async (id) => {
     try {
@@ -69,19 +65,19 @@ const Cart = () => {
 
   const handlePayment = async () => {
     const scriptLoaded = await loadRazorpayScript();
-  
+
     if (!scriptLoaded) {
       alert("Razorpay SDK failed to load. Are you online?");
       return;
     }
-  
+
     // Step 1: Create order in backend
     const orderResult = await axios.post(`http://localhost:3000/api/users/payment/${userid}`, {
       amount: cartitems.reduce((acc, item) => acc + item.productid.price * item.quantity, 0), // Amount in INR
     });
-  
+
     const { amount, id: order_id, currency } = orderResult.data;
-  
+
     const options = {
       key: "rzp_test_3YFqc3qjVhg3aK",
       amount: amount.toString(),
@@ -96,15 +92,11 @@ const Cart = () => {
           razorpay_order_id: response.razorpay_order_id,
           razorpay_payment_id: response.razorpay_payment_id,
           razorpay_signature: response.razorpay_signature,
-
         };
-        console.log(paymentData);
-  
+
         const verificationResult = await axios.post("http://localhost:3000/api/users/verifypayment", paymentData);
-  
-   
-          // Step 3: Save order
-      
+
+        // Step 3: Save order
       },
       prefill: {
         name: "Gaurav Kumar",
@@ -118,7 +110,7 @@ const Cart = () => {
         color: "#3399cc",
       },
     };
-  
+
     const rzp1 = new window.Razorpay(options);
     rzp1.on("payment.failed", function (response) {
       alert(response.error.code);
@@ -129,62 +121,60 @@ const Cart = () => {
       alert(response.error.metadata.order_id);
       alert(response.error.metadata.payment_id);
     });
-  
+
     rzp1.open();
   };
-  
+
   return (
     <div>
       <Navbar />
-      <div className="p-1">
-        <h2 className="text-center text-3xl md:text-4xl lg:text-5xl">Items</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="container mx-auto p-4">
+        <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-semibold mb-6">Your Cart</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {cartitems.length > 0 ? (
-            cartitems.map((value) => (
-              <div key={value._id} className="bg-orange-300 p-5 gap-3 m-2">
-                <div className="flex justify-between">
+            cartitems.map((item) => (
+              <div key={item._id} className="bg-white rounded-lg shadow-lg p-5 flex flex-col justify-between">
+                <div className="flex justify-between mb-4">
                   <img
-                    style={{ height: 150, padding: 10 }}
-                    src={value.productid.productImg}
-                    alt=""
+                    className="w-full h-48 object-cover rounded-lg"
+                    src={item.productid.productImg}
+                    alt={item.productid.title}
                   />
-                  <div className="flex-grow mx-4">
-                    <h1 className="text-lg font-bold">{value.productid.title}</h1>
-                    <h1 className="text-gray-600"> ₹{value.productid.price}</h1>
-                    <h1 className="text-black"> Total Price  ₹{value.productid.price * value.quantity}</h1>
-                  </div>
-                  <div className="flex items-center">
-                    <button
-                      onClick={() => handleDecrement(value.productid._id)}
-                      className="bg-gray-200 px-2 py-2 rounded-l"
-                    >
-                      {" "}
-                      -
-                    </button>
-                    <span className="px-4">{value.quantity}</span>
-                    <button
-                      onClick={() => handleIncrement(value.productid._id)}
-                      className="bg-gray-200 px-2 py-2 rounded-l"
-                    >
-                      {" "}
-                      +
-                    </button>
-                    <button
-                      onClick={() => removeCart(value.productid._id)}
-                      className="ml-4 text-amber-200"
-                    >
-                      Remove
-                    </button>
-                  </div>
+                </div>
+                <div className="flex-grow">
+                  <h1 className="text-lg font-bold mb-2">{item.productid.title}</h1>
+                  <p className="text-gray-600">₹{item.productid.price}</p>
+                  <p className="text-black mt-2">Total: ₹{item.productid.price * item.quantity}</p>
+                </div>
+                <div className="flex items-center mt-4 space-x-3">
+                  <button
+                    onClick={() => handleDecrement(item.productid._id)}
+                    className="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300"
+                  >
+                    -
+                  </button>
+                  <span className="text-xl">{item.quantity}</span>
+                  <button
+                    onClick={() => handleIncrement(item.productid._id)}
+                    className="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300"
+                  >
+                    +
+                  </button>
+                  <button
+                    onClick={() => removeCart(item.productid._id)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
             ))
           ) : (
-            <p>Your cart is empty. Please add items to the cart.</p>
+            <p className="text-center text-gray-600">Your cart is empty. Please add items to the cart.</p>
           )}
         </div>
         {cartitems.length > 0 && (
-          <div className="text-center font-bold text-2xl">
+          <div className="text-center mt-8 font-bold text-2xl">
             <h1>
               Total: ₹
               {cartitems.reduce(
@@ -194,14 +184,13 @@ const Cart = () => {
             </h1>
             <button
               onClick={handlePayment}
-              className="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-600"
+              className="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg shadow-lg mt-4 hover:bg-blue-600"
             >
               Pay with Razorpay
             </button>
           </div>
         )}
       </div>
-   
       <Footer />
     </div>
   );
