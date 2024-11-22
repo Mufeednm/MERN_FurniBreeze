@@ -3,7 +3,10 @@ import Product from "../models/products.js";
 // show all Products
 export const allProduct = async (req, res) => {
   try {
+    console.log("erfan")
+
     const allProducts = await Product.find();
+
     console.log(allProducts);
     if (!allProducts) {
       return res.status(404).json({ message: "no products is to finding" });
@@ -34,6 +37,7 @@ export const productbyId = async (req, res, next) => {
 export const productbyCategory = async (req, res) => {
   try {
     const { categoryName } = req.params;
+
     // regex brings the similiar items
     const regex = new RegExp(categoryName, "i");
     const products = await Product.find({

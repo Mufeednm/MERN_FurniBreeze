@@ -8,12 +8,7 @@ import cors from "cors"
 config()
 const app = express()
 app.use(express.json());
-app.use(cors({
-    // origin:"http://localhost:5173", 
-    origin:"https://furnibreeze.vercel.app/", 
-    
-
-}))
+app.use(cors())
 
 const PORT =process.env.PORT||3000;
 
