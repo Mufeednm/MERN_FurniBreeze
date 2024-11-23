@@ -19,7 +19,7 @@ const Search = () => {
     const filtereddata =async () => {
 
 
-const response = await axios.get(`http://localhost:3000/api/users/products/category/${term}`)
+const response = await axios.get(`https://mern-furnibreeze.onrender.com/api/users/products/category/${term}`)
 
 console.log(response.data);
 

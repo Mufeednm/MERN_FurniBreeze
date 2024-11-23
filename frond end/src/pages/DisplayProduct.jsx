@@ -27,7 +27,7 @@ const DisplayProduct = () => {
 
   useEffect(() => {
     const getid = async () => {
-      const response = await axios.get(`http://localhost:3000/api/users/products/${id}`);
+      const response = await axios.get(`https://mern-furnibreeze.onrender.com/api/users/products/${id}`);
       setDatas(response.data.productbyId);
     };
     getid();

@@ -16,7 +16,8 @@ const UserOrder = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://localhost:3000/api/users/userorders/${id}`)
+      // axios.get(`http://localhost:3000/api/users/userorders/${id}`)
+      axios.get(`https://mern-furnibreeze.onrender.com/api/users/userorders/${id}`)
         .then(response => {
           setOrderDetails(response.data); // Assuming response.data contains an array of orders
           setLoading(false);
